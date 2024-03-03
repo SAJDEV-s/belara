@@ -33,6 +33,9 @@ class belaraProvider extends ServiceProvider
 
 
         #configs
+        $this->mergeConfigFrom(
+            __DIR__.'/config/belara.php', 'belara'
+        );
         $this->publishes([
             __DIR__.'/config/belara.php' => config_path('berala.php'),
         ]);

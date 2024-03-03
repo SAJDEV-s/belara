@@ -2,5 +2,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    dd('test is successfull');
+    dd(config('belara.auth_id'));
 });
