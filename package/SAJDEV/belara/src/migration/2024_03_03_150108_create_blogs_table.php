@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->text('body');
+            $table->string('metas');
 
             $table->foreignId('category_id')->constrained('blog_categories')->cascadeOnDelete();
             if (config('belara.author')){

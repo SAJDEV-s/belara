@@ -17,10 +17,12 @@ class Blog extends Model
         'description',
         'body',
         'is_published',
+        'metas',
 
         'author',
         'category_id',
     ];
+
 
     public function category()
     {
