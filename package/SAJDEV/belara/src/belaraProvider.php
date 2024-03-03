@@ -36,6 +36,5 @@ class belaraProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/belara.php' => config_path('berala.php'),
         ]);
-        // $value = config('courier.option');
     }
 }
