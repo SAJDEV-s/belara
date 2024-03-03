@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
+            $table->text('body');
+
+            $table->foreignId('category_id')->constrained('blog_categories')->cascadeOnDelete();
+            if (config('belara.author')){
+                $table->foreignId('author')->constrained('users','id')->cascadeOnDelete();
+            }else{
+                $table->string('author');
+            }
+
+            $table->boolean('is_published')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

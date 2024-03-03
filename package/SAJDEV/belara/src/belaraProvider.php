@@ -19,7 +19,7 @@ class belaraProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        #rotues 
+        #rotues
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
 
         #migrations
@@ -37,7 +37,7 @@ class belaraProvider extends ServiceProvider
             __DIR__.'/config/belara.php', 'belara'
         );
         $this->publishes([
-            __DIR__.'/config/belara.php' => config_path('berala.php'),
+            __DIR__.'/config/belara.php' => config_path('belara.php'),
         ]);
     }
 }
