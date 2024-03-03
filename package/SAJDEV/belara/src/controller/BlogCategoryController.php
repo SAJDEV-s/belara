@@ -8,9 +8,14 @@ use SAJDEV\belara\model\BlogCategory;
 
 class BlogCategoryController extends Controller
 {
+    public function index()
+    {
+        return view('belara::category');
+    }
     public function create()
     {
-
+        return view('belara::createcategory');
+        
     }
 
     public function store(Request $request)
@@ -50,6 +55,6 @@ class BlogCategoryController extends Controller
 
     public function delete()
     {
-
+dd('delete');
     }
 }

@@ -10,7 +10,7 @@ class BlogController extends Controller
 {
     public function create()
     {
-
+return view('belara::createblog');
     }
 
     public function store(Request $request)
@@ -42,6 +42,7 @@ class BlogController extends Controller
 
     public function edit()
     {
+// return view('belara::createblog');
 
     }
 
@@ -67,6 +68,6 @@ class BlogController extends Controller
 
     public function delete()
     {
-
+        dd('delete');
     }
 }
