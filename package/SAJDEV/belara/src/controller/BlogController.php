@@ -16,11 +16,19 @@ class BlogController extends Controller
     public function store(Request $request)
     {
 
+        $imageName=null;
+        $file=$request->file('image');
+        if (isset($file)){
+            $imageName=rand(1,99999999).$file->getClientOriginalName();
+            $file->move(public_path('media'),$imageName);
+        }
+
         Blog::query()->create([
             'title'         =>   $request->title,
             'slug'          =>   $request->slug,
             'description'   =>   $request->description,
             'body'          =>   $request->body,
+            'main_image'    =>   $imageName,
             'is_published'  =>   $request->is_published,
             'metas'          =>  $request->metas,
 
