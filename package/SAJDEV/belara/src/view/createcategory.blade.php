@@ -45,14 +45,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <form method="post" role="form">
+                <form method="post" role="form" action="{{ route('blogCategory.create') }}">
                     <div class="form-group">
                         <input type="text" class="form-control" name="title" placeholder="Title" />
                     </div>
                     <div class="form-group">
-                        <select class=" form-control" name="parent" id="">
+                        <input type="text" class="form-control" name="slug" placeholder="slug" />
+                    </div>
+                    <div class="form-group">
+                        <select class=" form-control" name="category_id" id="">
                             <option value="">parent</option>
-                            <option value="">parent</option>
+                            @foreach ($categores as $item )
+                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

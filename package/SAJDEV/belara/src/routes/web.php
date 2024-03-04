@@ -2,9 +2,10 @@
 use Illuminate\Support\Facades\Route;
 use SAJDEV\belara\controller\BlogController;
 use SAJDEV\belara\controller\BlogCategoryController;
+use SAJDEV\belara\controller\UploadImageController;
 
 #blog
-Route::get('blog/{slug}',[BlogController::class,'show'])->name('blog.show');
+Route::get('blog/show/{slug}',[BlogController::class,'show'])->name('blog.show');
 Route::get('blog/create',[BlogController::class,'create'])->name('blog.create');
 Route::post('blog/create',[BlogController::class,'store'])->name('blog.store');
 Route::post('blog/{id}/edit',[BlogController::class,'store'])->name('blog.edit');
@@ -18,6 +19,10 @@ Route::post('blogCategory/create',[BlogCategoryController::class,'store'])->name
 Route::get('blogCategory/{id}/edit',[BlogCategoryController::class,'store'])->name('blogCategory.edit');
 Route::put('blogCategory/{id}/edit',[BlogCategoryController::class,'store'])->name('blogCategory.update');
 Route::delete('blogCategory/{id}/delete',[BlogCategoryController::class,'delete'])->name('blogCategory.delete');
+    
+#uploadCKimage
+
+Route::post('/upload',[UploadImageController::class,'uploadImage'])->name('ckeditor.upload');
 
 
 // Route::get('/blog', function () {

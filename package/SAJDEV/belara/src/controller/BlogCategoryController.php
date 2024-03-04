@@ -14,13 +14,13 @@ class BlogCategoryController extends Controller
     }
     public function create()
     {
-        return view('belara::createcategory');
+        $categores = BlogCategory::get();
+        return view('belara::createcategory',compact('categores'));
         
     }
 
     public function store(Request $request)
     {
-
         BlogCategory::query()->create([
             'title'         =>   $request->title,
             'slug'          =>   $request->slug,
@@ -29,7 +29,7 @@ class BlogCategoryController extends Controller
 
         ]);
 
-        return back()->status(200);
+        // return back()->status(200);
     }
 
     public function edit()
@@ -49,7 +49,7 @@ class BlogCategoryController extends Controller
             'category_id'   =>   $request->category_id !=null ? $request->category_id : null,
         ]);
 
-        return back()->status(200);
+        // return back()->status(200);
 
     }
 

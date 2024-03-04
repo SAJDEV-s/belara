@@ -3,18 +3,28 @@
 namespace SAJDEV\belara\controller;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use SAJDEV\belara\model\Blog;
+use SAJDEV\belara\model\BlogCategory;
 
 class BlogController extends Controller
 {
+    public function show($slug)
+    {
+        $blog=Blog::where('slug',$slug)->first();
+        return view('belara::blog',compact('blog'));
+    }
     public function create()
     {
-return view('belara::createblog');
+        $users=User::get();
+       $categores=BlogCategory::get(); 
+        return view('belara::createblog',compact('categores','users'));
     }
-
+    
     public function store(Request $request)
     {
+        // dd($request);
 
         $imageName=null;
         $file=$request->file('image');
@@ -37,7 +47,7 @@ return view('belara::createblog');
 
         ]);
 
-        return back()->status(200);
+        // return back()->status(200);
     }
 
     public function edit()
@@ -63,7 +73,7 @@ return view('belara::createblog');
             'category_id'   =>   $request->category_id ,
         ]);
 
-        return back()->status(200);
+        // return back()->status(200);
     }
 
     public function delete()

@@ -16,6 +16,7 @@ class BlogCategory extends Model
 
         'category_id'
     ];
+    protected $table='blog_categories';
 
     public function blogs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

@@ -39,6 +39,9 @@
         .container {
             padding-top: 20px;
         }
+        .ck-editor__editable_inline{
+            height: 450px;
+        }
     </style>
 </head>
 
@@ -46,7 +49,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <form method="post" role="form">
+                <form method="post" role="form" action="{{ route('blog.create') }}" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <input type="text" class="form-control" name="title" placeholder="Title" />
                     </div>
@@ -54,12 +58,43 @@
                         <input type="text" class="form-control" name="slug" placeholder="slug" />
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="description" placeholder="slug" />
+                        <input type="text" class="form-control" name="description" placeholder="description" />
                     </div>
-                    <div id="editor"></div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="metas" placeholder="metas ," />
+                    </div>
+                    <div class="form-group">
+                        <select class=" form-control" name="category_id" id="">
+                            <option value="">category</option>
+                            @foreach ($categores as $item )
+                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @if (config('belara.author'))
+                    <div class="form-group">
+                        <select class=" form-control" name="author" id="">
+                            <option value="">author</option>
+                            @foreach ($users as $item )
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @else
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="author" placeholder="author" />
+                    </div>
+                    @endif
+                    <textarea name="body" id="editor" cols="30" rows="10"></textarea>
                     <script>
                         ClassicEditor
-                            .create( document.querySelector( '#editor' ) )
+                            .create( document.querySelector( '#editor' ),
+                            {
+                                ckfinder: {
+                                    uploadUrl:"{{ route('ckeditor.upload',['_token'=>csrf_token()]) }}",
+                                }
+                            }
+                             )
                             .catch( error => {
                                 console.error( error );
                             } );
@@ -70,14 +105,21 @@
 
                             <span class="input-group-btn">
                                 <span class="btn btn-primary btn-file">
-                                    Browse <input type="file" name="bimgs" multiple>
+                                    Browse <input type="file" name="image" multiple>
                                 </span>
                             </span>
                             <input type="text" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control bcontent" name="content"></textarea>
+                        <label> is publishe </label>
+                        <div class="input-group">
+
+                            no
+                            <input type="radio" value="0" checked name="is_published" class="form-check" >
+                            yes
+                            <input type="radio" value="1" name="is_published" class="form-check" >
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="submit" name="Submit" value="Publish" class="btn btn-primary form-control" />
