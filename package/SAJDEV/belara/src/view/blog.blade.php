@@ -13,12 +13,10 @@
     <div class="container">
         <div class="row bg-light p-5">
           <div class="col-12 fs-1 text-center">
-            title
+            {{ $blog->title }}
           </div>
           <div class="col-12 bold">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore distinctio neque accusamus modi architecto nostrum sapiente! Vitae corrupti ipsam id sapiente doloribus hic. Tempore repellendus doloribus deleniti ducimus, dicta eum?
-            Sint nulla minima debitis sapiente laborum, voluptate harum et nihil illum rem perferendis illo odio sed itaque. Perspiciatis tempora repudiandae vitae quo dolorum minus, in tenetur unde magni rem quam?
-            Nam dicta commodi eos deserunt, eum tempore perferendis fugit rem temporibus magnam dignissimos! Odio aliquid quo, itaque, necessitatibus provident omnis error recusandae accusamus nesciunt illum dignissimos corrupti distinctio totam blanditiis.
+            {!! $blog->body !!}
           </div>
         </div>
     </div>
