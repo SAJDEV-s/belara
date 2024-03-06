@@ -5,6 +5,7 @@ namespace SAJDEV\belara\controller;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use SAJDEV\belara\model\Blog;
 use SAJDEV\belara\model\BlogCategory;
 
@@ -17,14 +18,42 @@ class BlogController extends Controller
     }
     public function create()
     {
-        $users=User::get();
-       $categores=BlogCategory::get(); 
+        $users=User::query()->get();
+       $categores=BlogCategory::query()->get();
         return view('belara::createblog',compact('categores','users'));
     }
-    
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
         // dd($request);
+        if (config('belara.author')){
+            Validator::make($request->all(),[
+                'title'=>'required|max:255|min:3',
+                'slug'=>'required|min:255|min:1',
+                'description'=>'nullable',
+                'main_image'=>'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
+                'is_published'=>'required|boolean',
+                'metas'=>'required|max:255',
+                'author'=>'required|exists:users,id',
+                'category_id'=>'exists:blog_categories,id|required'
+            ])->validate();
+        }else{
+           $s= Validator::make($request->all(),[
+                'title'=>'required|max:255|min:3',
+                'slug'=>'required|min:255|min:1',
+                'description'=>'nullable',
+                'main_image'=>'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
+                'is_published'=>'required|boolean',
+                'metas'=>'required|max:255',
+                'author'=>'required|max:255',
+                'category_id'=>'required|exists:blog_categories,id'
+            ])->validate();
+
+        }
+
 
         $imageName=null;
         $file=$request->file('image');
