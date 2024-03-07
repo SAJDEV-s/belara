@@ -11,6 +11,10 @@ use SAJDEV\belara\model\BlogCategory;
 
 class BlogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('web');
+    }
     public function show($slug)
     {
         $blog=Blog::where('slug',$slug)->first();
@@ -28,29 +32,32 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+
+        // dd(session()->getOldInput());
         if (config('belara.author')){
             Validator::make($request->all(),[
                 'title'=>'required|max:255|min:3',
-                'slug'=>'required|min:255|min:1',
+                'slug'=>'required|max:255|min:1',
                 'description'=>'nullable',
                 'main_image'=>'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
                 'is_published'=>'required|boolean',
                 'metas'=>'required|max:255',
                 'author'=>'required|exists:users,id',
                 'category_id'=>'exists:blog_categories,id|required'
-            ])->validate();
-        }else{
-           $s= Validator::make($request->all(),[
+                ])->validate();
+            }else{
+            
+               $s= Validator::make($request->all(),[
                 'title'=>'required|max:255|min:3',
-                'slug'=>'required|min:255|min:1',
+                'slug'=>'required|max:255|min:1',
                 'description'=>'nullable',
                 'main_image'=>'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
-                'is_published'=>'required|boolean',
+                'is_published'=>'required',
                 'metas'=>'required|max:255',
                 'author'=>'required|max:255',
                 'category_id'=>'required|exists:blog_categories,id'
             ])->validate();
+            
 
         }
 

@@ -52,10 +52,16 @@
         <div class="col-md-12">
             <form method="post" role="form" action="{{ route('blog.create') }}" enctype="multipart/form-data">
                 @csrf
+                @method('POST')
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" value="{{old('title')}}" placeholder="Title"/>
 
                 </div>
+                @error('title')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
                 <div class="form-group">
                     <input type="text" class="form-control" name="slug" placeholder="slug"/>
                 </div>
