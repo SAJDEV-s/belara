@@ -16,12 +16,12 @@ class ComposerStaticInit7040baab480a0716de2f4e41011a6503
     public static $prefixDirsPsr4 = array (
         'Sajdev\\Belara\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..',
         ),
     );
 
     public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/vendor' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

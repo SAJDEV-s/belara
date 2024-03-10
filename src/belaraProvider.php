@@ -20,29 +20,29 @@ class belaraProvider extends ServiceProvider
     public function boot(): void
     {
         #rotues
-        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
 
         #migrations
-        $this->loadMigrationsFrom(__DIR__.'/migration');
+        $this->loadMigrationsFrom(__DIR__ . '/migration');
 
         #views
-        $this->loadViewsFrom(__DIR__.'/view', 'belara');
+        $this->loadViewsFrom(__DIR__ . '/view', 'belara');
         $this->publishes([
-            __DIR__.'/view' => resource_path('views/vendor/belara'),
+            __DIR__ . '/view' => resource_path('views/vendor/belara'),
         ],'belaraView');
 
 
         #configs
         $this->mergeConfigFrom(
-            __DIR__.'/config/belara.php', 'belara'
+            __DIR__ . '/config/belara.php', 'belara'
         );
         $this->publishes([
-            __DIR__.'/config/belara.php' => config_path('belara.php'),
+            __DIR__ . '/config/belara.php' => config_path('belara.php'),
         ],'belara');
 
         #public
         $this->publishes([
-            __DIR__.'/public' => public_path('vendor/belara'),
+            __DIR__ . '/public' => public_path('vendor/belara'),
         ], 'belaraPublic');
     }
 }
