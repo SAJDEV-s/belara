@@ -27,11 +27,11 @@
   "extra": {
     "laravel": {
       "providers": [
-        "SAJDEV\\belara\\src\\belaraProvider"
+        "Sajdev\\Belara\\belaraProvider"
       ],
       "aliases": {
-        "Blog": "SAJDEV\\belara\\src\\model\\Blog",
-        "BlogCategory": "SAJDEV\\belara\\src\\model\\BlogCategory"
+        "Blog": "Sajdev\\Belara\\model\\Blog",
+        "BlogCategory": "Sajdev\\Belara\\model\\BlogCategory"
       }
     }
   }
