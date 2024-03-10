@@ -6,7 +6,7 @@ use SAJDEV\belara\controller\UploadImageController;
 
 #blog
 Route::prefix(config('belara.prefix'))->middleware(config('belara.middlewares'))->group(function (){
-    Route::get('blog/show/{slug}',[BlogController::class,'show'])->name('blog.show');
+//    Route::get('blog/show/{slug}',[BlogController::class,'show'])->name('blog.show');
     Route::get('blog/create',[BlogController::class,'create'])->name('blog.create');
     Route::post('blog/create',[BlogController::class,'store'])->name('blog.store');
     Route::get('blog/{id}/edit',[BlogController::class,'edit'])->name('blog.edit');

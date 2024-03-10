@@ -29,7 +29,7 @@ class belaraProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/view', 'belara');
         $this->publishes([
             __DIR__.'/view' => resource_path('views/vendor/belara'),
-        ],'view');
+        ],'belaraView');
 
 
         #configs
@@ -43,6 +43,6 @@ class belaraProvider extends ServiceProvider
         #public
         $this->publishes([
             __DIR__.'/public' => public_path('vendor/belara'),
-        ], 'belaraView');
+        ], 'belaraPublic');
     }
 }
