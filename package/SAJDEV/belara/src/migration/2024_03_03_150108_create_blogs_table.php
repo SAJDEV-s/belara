@@ -28,6 +28,7 @@ return new class extends Migration
             }
 
             $table->boolean('is_published')->default(0);
+            $table->text('links_block')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

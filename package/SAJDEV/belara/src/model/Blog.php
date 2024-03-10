@@ -19,6 +19,7 @@ class Blog extends Model
         'is_published',
         'metas',
         'main_image',
+        'links_block',
 
         'author',
         'category_id',

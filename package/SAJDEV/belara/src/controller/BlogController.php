@@ -15,16 +15,21 @@ class BlogController extends Controller
     {
         $this->middleware('web');
     }
+
     public function show($slug)
     {
-        $blog=Blog::where('slug',$slug)->first();
-        return view('belara::blog',compact('blog'));
+        $blog = Blog::where('slug', $slug)->first();
+        return view('belara::blog', compact('blog'));
     }
+
     public function create()
     {
-        $users=User::query()->get();
-       $categores=BlogCategory::query()->get();
-        return view('belara::createblog',compact('categores','users'));
+        $users=[];
+        if (config('belara.author')){
+            $users = User::query()->get();
+        }
+        $categores = BlogCategory::query()->get();
+        return view('belara::createblog', compact('categores', 'users'));
     }
 
     /**
@@ -33,87 +38,119 @@ class BlogController extends Controller
     public function store(Request $request)
     {
 
-        // dd(session()->getOldInput());
-        if (config('belara.author')){
-            Validator::make($request->all(),[
-                'title'=>'required|max:255|min:3',
-                'slug'=>'required|max:255|min:1',
-                'description'=>'nullable',
-                'main_image'=>'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
-                'is_published'=>'required|boolean',
-                'metas'=>'required|max:255',
-                'author'=>'required|exists:users,id',
-                'category_id'=>'exists:blog_categories,id|required'
-                ])->validate();
-            }else{
-            
-               $s= Validator::make($request->all(),[
-                'title'=>'required|max:255|min:3',
-                'slug'=>'required|max:255|min:1',
-                'description'=>'nullable',
-                'main_image'=>'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
-                'is_published'=>'required',
-                'metas'=>'required|max:255',
-                'author'=>'required|max:255',
-                'category_id'=>'required|exists:blog_categories,id'
+        if (config('belara.author')) {
+            Validator::make($request->all(), [
+                'title' => 'required|max:255|min:3',
+                'slug' => 'required|max:255|min:1|unique:blogs,slug',
+                'description' => 'nullable',
+                'main_image' => 'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
+                'is_published' => 'required|boolean',
+                'metas' => 'required|max:255',
+                'author' => 'required|exists:users,id',
+                'category_id' => 'exists:blog_categories,id|required'
             ])->validate();
-            
-
+        } else {
+            Validator::make($request->all(), [
+                'title' => 'required|max:255|min:3',
+                'slug' => 'required|max:255|min:1|unique:blogs,slug',
+                'description' => 'nullable',
+                'main_image' => 'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
+                'is_published' => 'required|boolean',
+                'metas' => 'required|max:255',
+                'author' => 'required|max:255',
+                'category_id' => 'required|exists:blog_categories,id',
+            ])->validate();
         }
 
-
-        $imageName=null;
-        $file=$request->file('image');
-        if (isset($file)){
-            $imageName=rand(1,99999999).$file->getClientOriginalName();
-            $file->move(public_path('media'),$imageName);
+        $imageName = null;
+        $file = $request->file('image');
+        if (isset($file)) {
+            $imageName = rand(1, 99999999) . $file->getClientOriginalName();
+            $file->move(public_path('media'), $imageName);
         }
 
         Blog::query()->create([
-            'title'         =>   $request->title,
-            'slug'          =>   $request->slug,
-            'description'   =>   $request->description,
-            'body'          =>   $request->body,
-            'main_image'    =>   $imageName,
-            'is_published'  =>   $request->is_published,
-            'metas'          =>  $request->metas,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'body' => $request->body,
+            'main_image' => $imageName,
+            'is_published' => $request->is_published,
+            'metas' => $request->metas,
+            'links_block' => config('belara.blockLinks') ? $request->links : null,
 
-            'author'        =>   $request->author,
-            'category_id'   =>   $request->category_id ,
-
+            'author' => $request->author,
+            'category_id' => $request->category_id,
         ]);
 
-        // return back()->status(200);
     }
 
-    public function edit()
+    public function edit($blog)
     {
-// return view('belara::createblog');
-
-    }
-
-    public function update(Request $request,Blog $blog)
-    {
-        if (empty($blog[0])){
-            abort(404);
+        $blog = Blog::query()->where('id', $blog)->first();
+        $users=[];
+        if (config('belara.author')){
+            $users = User::query()->get();
         }
-        $blog->query()->update([
-            'title'         =>   $request->title,
-            'slug'          =>   $request->slug,
-            'description'   =>   $request->description,
-            'body'          =>   $request->body,
-            'is_published'  =>   $request->is_published,
-            'metas'          =>  $request->metas,
-
-            'author'        =>   $request->author,
-            'category_id'   =>   $request->category_id ,
-        ]);
-
-        // return back()->status(200);
+        $categores = BlogCategory::query()->get();
+        return view('belara::editblog', compact('blog','users','categores'));
     }
 
-    public function delete()
+    public function update(Request $request,  $blog)
     {
-        dd('delete');
+
+        $blog = Blog::query()->where('id', $blog)->first();
+        if (config('belara.author')) {
+            Validator::make($request->all(), [
+                'title' => 'required|max:255|min:3',
+                'slug' => 'required|max:255|min:1|unique:blogs,slug,'.$blog->id,
+                'description' => 'nullable',
+                'main_image' => 'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
+                'is_published' => 'required|boolean',
+                'metas' => 'required|max:255',
+                'author' => 'required|exists:users,id',
+                'category_id' => 'exists:blog_categories,id|required'
+            ])->validate();
+        } else {
+
+            Validator::make($request->all(), [
+                'title' => 'required|max:255|min:3',
+                'slug' => 'required|max:255|min:1|unique:blogs,slug,'.$blog->id,
+                'description' => 'nullable',
+                'main_image' => 'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
+                'is_published' => 'required|boolean',
+                'metas' => 'required|max:255',
+                'author' => 'required|max:255',
+                'category_id' => 'required|exists:blog_categories,id',
+            ])->validate();
+        }
+        if (isset($blog)) {
+
+        $blog->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'body' => $request->body,
+            'is_published' => $request->is_published,
+            'metas' => $request->metas,
+            'links_block' => config('belara.blockLinks') ? $request->links : null,
+
+
+            'author' => $request->author,
+            'category_id' => $request->category_id,
+        ]);
+        return back();
+        }
+
+         return abort(404);
+    }
+
+    public function delete($blog)
+    {
+        $blog = Blog::query()->where('id', $blog)->first();
+       if (isset($blog)){
+           $blog->delete();
+       }
+       return abort(404);
     }
 }

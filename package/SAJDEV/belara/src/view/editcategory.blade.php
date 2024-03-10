@@ -45,11 +45,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form method="post" role="form" action="{{ route('blogCategory.create') }}">
+            <form method="post" role="form" action="{{ route('blogCategory.update',['id'=>$category->id]) }}">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label for="title">{{__('title')}}</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}"
+                    <input type="text" class="form-control" id="title" name="title" value="{{$category->title}}"
                            placeholder="Title"/>
                 </div>
                 @error('title')
@@ -60,7 +61,7 @@
                 <div class="form-group">
                     <label for="slug">{{__('slug')}}</label>
                     <input type="text" class="form-control" id="slug" name="slug" placeholder="slug"
-                           value="{{old('slug')}}"/>
+                           value="{{$category->slug}}"/>
                 </div>
                 @error('slug')
                 <span class="invalid-feedback" role="alert">
@@ -71,8 +72,8 @@
                     <label for="category">{{__('category')}}</label>
                     <select class=" form-control" name="category_id" id="category">
                         <option value="">_______</option>
-                        @foreach  ($categores as $item )
-                            <option @if(old('category_id') ==$item->id ) selected
+                        @foreach  ($categories as $item )
+                            <option @if($category->category_id ==$item->id ) selected
                                     @endif value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach
                     </select>

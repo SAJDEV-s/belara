@@ -57,12 +57,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form method="post" role="form" action="{{ route('blog.create') }}" enctype="multipart/form-data">
+            <form method="post" role="form" action="{{ route('blog.update',['id'=>$blog->id]) }}" enctype="multipart/form-data">
                 @csrf
-                @method('POST')
+                @method('PUT')
                 <div class="form-group">
-                    <label for="title">{{ __('title')}}</label>
-                    <input type="text" id="title" class="form-control" name="title" value="{{old('title')}}"
+                    <label for="title">{{__('title')}}</label>
+                    <input type="text" id="title" class="form-control" name="title" value="{{$blog->title}}"
                            placeholder="Title"/>
                 </div>
 
@@ -73,7 +73,7 @@
                 @enderror
                 <div class="form-group">
                     <label for="slug">{{__('slug')}}</label>
-                    <input type="text" id="slug" class="form-control" name="slug" value="{{old('slug')}}"
+                    <input type="text" id="slug" class="form-control" name="slug" value="{{$blog->slug}}"
                            placeholder="slug"/>
                     @error('slug')
                     <span class="invalid-feedback" role="alert">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">{{__('description')}}</label>
-                    <input type="text" id="description" value="{{old('description')}}" class="form-control"
+                    <input type="text" id="description" value="{{$blog->description}}" class="form-control"
                            name="description"
                            placeholder="description"/>
                     @error('description')
@@ -111,7 +111,7 @@
                 </div>
                 <div class="form-group">
                     <label for="metas">{{__('metas')}}</label>
-                    <input type="text" id="metas" class="form-control" name="metas" value="{{old('metas')}}"
+                    <input type="text" id="metas" class="form-control" name="metas" value="{{$blog->metas}}"
                            placeholder="metas ,"/>
                     @error('metas')
                     <span class="invalid-feedback" role="alert">
@@ -126,7 +126,7 @@
                         <option value="">-------</option>
                         @foreach ($categores as $item )
 
-                            <option @if($item->id ==old('category_id')) selected
+                            <option @if($item->id ==$blog->category_id) selected
                                     @endif value="{{ $item->id }}">{{ $item->title }}</option>
                         @endforeach
                     </select>
@@ -145,7 +145,7 @@
                         <select class=" form-control" name="author" id="author">
                             <option value="">-------</option>
                             @foreach ($users as $item )
-                                <option @if($item->id ==old('author')) selected
+                                <option @if($item->id ==$blog->author) selected
                                         @endif value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
@@ -153,7 +153,7 @@
                 @else
                     <div class="form-group">
                         <label for="author">{{__('author')}}</label>
-                        <input type="text" id="author" class="form-control" value="{{old('author')}}" name="author"
+                        <input type="text" id="author" class="form-control" value="{{$blog->author}}" name="author"
                                placeholder="author"/>
                     </div>
                 @endif
@@ -162,8 +162,8 @@
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-                <label for="body">{{__('body')}}</label>
-                <textarea name="body" id="body" cols="30" rows="10">{{old('body')}}</textarea>
+                <label for="body">body</label>
+                <textarea name="body" id="body" cols="30" rows="10">{{$blog->body}}</textarea>
 
                 @error('body')
                 <span class="invalid-feedback" role="alert">
@@ -174,7 +174,7 @@
 
                     <label for="links">{{__('links')}}</label>
                     <div>
-                        <textarea name="links" id="links" cols="10" rows="2">{{old('links')}}</textarea>
+                        <textarea name="links" id="links" cols="10" rows="2">{{$blog->links}}</textarea>
 
                     </div>
                     @error('links')
@@ -186,17 +186,17 @@
 
 
                 <div class="form-group">
-                    <label for="is_published">{{__(' is publish ')}}</label>
+                    <label for="is_published">{{__('is publish')}}</label>
                     <div class="input-group">
                         no
                         <label>
-                            <input type="radio" @if(old('is_published') ==0) checked @endif id="is_published" value="0"
+                            <input type="radio" @if($blog->is_published ==0) checked @endif id="is_published" value="0"
                                    name="is_published"
                                    class="form-check">
                         </label>
                         yes
                         <label>
-                            <input id="is_published" @if(old('is_published') ==1) checked @endif  type="radio" value="1"
+                            <input id="is_published" @if($blog->is_published ==1) checked @endif  type="radio" value="1"
                                    name="is_published" class="form-check">
                         </label>
                     </div>
