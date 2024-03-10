@@ -27,7 +27,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "SAJDEV\\belara\\belaraProvider"
+        "SAJDEV\\belara\\src\\belaraProvider"
       ],
       "aliases": {
         "Blog": "SAJDEV\\belara\\src\\model\\Blog",
