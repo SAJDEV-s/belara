@@ -8,5 +8,5 @@ return [
     // prefix for routes
     'prefix'=>'admin',
     // middleware
-    'middleware'=>'w'
+    'middlewares'=>[]
 ];

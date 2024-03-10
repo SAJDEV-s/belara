@@ -14,10 +14,7 @@ class BlogCategoryController extends Controller
         $this->middleware(['web']);
     }
 
-    public function index()
-    {
-        return view('belara::category');
-    }
+
     public function create()
     {
         $categores = BlogCategory::get();

@@ -38,11 +38,11 @@ class belaraProvider extends ServiceProvider
         );
         $this->publishes([
             __DIR__.'/config/belara.php' => config_path('belara.php'),
-        ],'config');
+        ],'belara');
 
         #public
         $this->publishes([
             __DIR__.'/public' => public_path('vendor/belara'),
-        ], 'public');
+        ], 'belaraView');
     }
 }
