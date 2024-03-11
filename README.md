@@ -74,7 +74,7 @@ php artisan vendor:publish --tag=belaraView
 
 
 
-### if in config/belara.php author in true use this (Models/User.php)
+### if in config/belara.php author is true use this (Models/User.php)
 ```php
 <?php
 
