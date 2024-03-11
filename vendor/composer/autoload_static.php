@@ -9,19 +9,19 @@ class ComposerStaticInit7040baab480a0716de2f4e41011a6503
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Sajdev\\Belara\\' => 14,
+            'SAJDEV\\Belara\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Sajdev\\Belara\\' => 
+        'SAJDEV\\Belara\\' => 
         array (
-            0 => __DIR__ . '/../..',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/vendor' . '/composer/InstalledVersions.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
