@@ -25,6 +25,11 @@ class belaraProvider extends ServiceProvider
         #migrations
         $this->loadMigrationsFrom(__DIR__ . '/migration');
 
+        $this->publishes([
+            __DIR__."/migration"=>database_path('migrations')
+        ],'belaraMigarte');
+
+
         #views
         $this->loadViewsFrom(__DIR__ . '/view', 'belara');
         $this->publishes([
