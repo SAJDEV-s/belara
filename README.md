@@ -1,5 +1,5 @@
 Make it easier by using the belara(laravel-blog)
-composer require sajdev/belara
+
 
 #### Composer Install (for Laravel 8+)
 
