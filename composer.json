@@ -10,7 +10,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "SAJDEV\\Belara\\": "src/"
+      "SAJDEV\\belara\\": "src/"
     }
   },
   "require": {
@@ -27,11 +27,11 @@
   "extra": {
     "laravel": {
       "providers": [
-        "SAJDEV\\Belara\\belaraProvider"
+        "SAJDEV\\belara\\belaraProvider"
       ],
       "aliases": {
-        "Blog": "SAJDEV\\Belara\\model\\Blog",
-        "BlogCategory": "SAJDEV\\Belara\\model\\BlogCategory"
+        "Blog": "SAJDEV\\belara\\model\\Blog",
+        "BlogCategory": "SAJDEV\\belara\\model\\BlogCategory"
       }
     }
   }
