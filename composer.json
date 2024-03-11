@@ -34,5 +34,7 @@
         "BlogCategory": "SAJDEV\\belara\\model\\BlogCategory"
       }
     }
-  }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
 }
