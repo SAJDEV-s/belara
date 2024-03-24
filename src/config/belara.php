@@ -8,14 +8,5 @@ return [
     // prefix for routes
     'prefix'=>'admin',
     // middlewares
-    'middlewares'=>[],
-    // redirect when create a new blog (route)
-    'redirectCreateBlog'=>null, // example 'redirectCreateBlog'=>'blog.index'
-      // redirect when edit a blog (route)
-    'redirectEditBlog'=>null,
-    // redirect when create a new CategoryBlog (route)
-    'redirectCreateCategoryBlog'=>null,
-    // redirect when edit a CategoryBlog (route)
-    'redirectEditCategoryBlog'=>null,
-
+    'middlewares'=>[]
 ];
