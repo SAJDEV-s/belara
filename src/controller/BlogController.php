@@ -24,8 +24,8 @@ class BlogController extends Controller
 
     public function create()
     {
-        $users=[];
-        if (config('belara.author')){
+        $users = [];
+        if (config('belara.author')) {
             $users = User::query()->get();
         }
         $categores = BlogCategory::query()->get();
@@ -69,7 +69,7 @@ class BlogController extends Controller
             $file->move(public_path('media'), $imageName);
         }
 
-        Blog::query()->create([
+        $blog = Blog::query()->create([
             'title' => $request->title,
             'slug' => $request->slug,
             'description' => $request->description,
@@ -82,28 +82,33 @@ class BlogController extends Controller
             'author' => $request->author,
             'category_id' => $request->category_id,
         ]);
+        if (config('belara.redirectCreateBlog')) {
+            return redirect()->route(config('belara.redirectCreateBlog'));
+        } else {
+            return dd($blog);
+        }
 
     }
 
     public function edit($blog)
     {
         $blog = Blog::query()->where('id', $blog)->first();
-        $users=[];
-        if (config('belara.author')){
+        $users = [];
+        if (config('belara.author')) {
             $users = User::query()->get();
         }
         $categores = BlogCategory::query()->get();
-        return view('belara::editblog', compact('blog','users','categores'));
+        return view('belara::editblog', compact('blog', 'users', 'categores'));
     }
 
-    public function update(Request $request,  $blog)
+    public function update(Request $request, $blog)
     {
 
         $blog = Blog::query()->where('id', $blog)->first();
         if (config('belara.author')) {
             Validator::make($request->all(), [
                 'title' => 'required|max:255|min:3',
-                'slug' => 'required|max:255|min:1|unique:blogs,slug,'.$blog->id,
+                'slug' => 'required|max:255|min:1|unique:blogs,slug,' . $blog->id,
                 'description' => 'nullable',
                 'main_image' => 'image|nullable|size:2000|mimes:png,jpg,gif,jpeg,webp',
                 'is_published' => 'required|boolean',
@@ -115,7 +120,7 @@ class BlogController extends Controller
 
             Validator::make($request->all(), [
                 'title' => 'required|max:255|min:3',
-                'slug' => 'required|max:255|min:1|unique:blogs,slug,'.$blog->id,
+                'slug' => 'required|max:255|min:1|unique:blogs,slug,' . $blog->id,
                 'description' => 'nullable',
                 'main_image' => 'image|nullable|size:2048|mimes:png,jpg,gif,jpeg,webp',
                 'is_published' => 'required|boolean',
@@ -126,31 +131,35 @@ class BlogController extends Controller
         }
         if (isset($blog)) {
 
-        $blog->update([
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'description' => $request->description,
-            'body' => $request->body,
-            'is_published' => $request->is_published,
-            'metas' => $request->metas,
-            'links_block' => config('belara.blockLinks') ? $request->links : null,
+            $blog->update([
+                'title' => $request->title,
+                'slug' => $request->slug,
+                'description' => $request->description,
+                'body' => $request->body,
+                'is_published' => $request->is_published,
+                'metas' => $request->metas,
+                'links_block' => config('belara.blockLinks') ? $request->links : null,
 
 
-            'author' => $request->author,
-            'category_id' => $request->category_id,
-        ]);
-        return back();
+                'author' => $request->author,
+                'category_id' => $request->category_id,
+            ]);
+            if (config('belara.redirectEditBlog')) {
+                return redirect()->route(config('belara.redirectEditBlog'));
+            } else {
+                return dd($blog);
+            };
         }
 
-         return abort(404);
+        return abort(404);
     }
 
     public function delete($blog)
     {
         $blog = Blog::query()->where('id', $blog)->first();
-       if (isset($blog)){
-           $blog->delete();
-       }
-       return abort(404);
+        if (isset($blog)) {
+            $blog->delete();
+        }
+        return abort(404);
     }
 }

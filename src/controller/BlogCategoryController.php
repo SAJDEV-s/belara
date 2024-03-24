@@ -30,14 +30,18 @@ class BlogCategoryController extends Controller
 
             'category_id'=>'nullable|exists:blog_categories,id'
         ])->validate();
-        BlogCategory::query()->create([
+        $category= BlogCategory::query()->create([
             'title'         =>   $request->title,
             'slug'          =>   $request->slug,
 
             'category_id'   =>   $request->category_id !=null ? $request->category_id : null,
 
         ]);
-
+        if (config('belara.redirectCreateCategoryBlog')) {
+            return redirect()->route(config('belara.redirectCreateCategoryBlog'));
+        } else {
+            return dd($category);
+        }
         // return back()->status(200);
     }
 
@@ -73,13 +77,23 @@ class BlogCategoryController extends Controller
 
                 'category_id'   =>   $request->category_id !=null ? $request->category_id : null,
             ]);
-            return  back();
+
+            if (config('belara.redirectEditCategoryBlog')) {
+                return redirect()->route(config('belara.redirectEditCategoryBlog'));
+            } else {
+                return dd($blogCategory);
+            }
         }
         return   abort(404);
     }
 
-    public function delete()
+
+    public function delete($blogCategory)
     {
-dd('delete');
+        $blogCategory = BlogCategory::query()->where('id',$blogCategory)->first();
+        if ($blogCategory){
+            $blogCategory->delete();
+        }
+        return abort(404);
     }
 }

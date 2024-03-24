@@ -1,0 +1,40 @@
+{
+  "name": "sajdev/belara",
+  "description": "Make it easier by using the belara(laravel-blog)",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "SajDev",
+      "email": "sajdevprog@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "SAJDEV\\belara\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=8.0",
+    "laravel/framework": ">=8.2"
+  },
+  "keywords": [
+    "blog laravel",
+    "easi blog laravel",
+    "blog ir laravel",
+    "category and blog"
+  ],
+  "homepage": "https://github.com/SajDev-4/belara",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SAJDEV\\belara\\belaraProvider"
+      ],
+      "aliases": {
+        "Blog": "SAJDEV\\belara\\model\\Blog",
+        "BlogCategory": "SAJDEV\\belara\\model\\BlogCategory"
+      }
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
+}
